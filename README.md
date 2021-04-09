@@ -1,6 +1,6 @@
 # bbox
 
-This is a Go library to get the bounding box from coordinates in floating-point or E7 represention.
+This is a Go library to get the bounding box from coordinates in floating-point or E7 representation.
 
 ## Install
 
@@ -14,11 +14,7 @@ go get github.com/lbrun25/bbox
 package main
 
 import (
-	"bytes"
-	"log"
-	
-	"github.com/lbrun25/fenv"
-	"github.com/spf13/viper"
+	"github.com/lbrun25/bbox"
 )
 
 func main() {
