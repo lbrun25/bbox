@@ -1,4 +1,4 @@
-module bbox
+module github.com/lbrun25/bbox
 
 go 1.15
 
