@@ -1,7 +1,7 @@
 package bbox_test
 
 import (
-	"bbox"
+	"github.com/lbrun25/bbox"
 	"github.com/stretchr/testify/assert"
 	"math"
 	"testing"
