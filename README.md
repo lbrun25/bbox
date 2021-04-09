@@ -14,11 +14,7 @@ go get github.com/lbrun25/bbox
 package main
 
 import (
-	"bytes"
-	"log"
-	
-	"github.com/lbrun25/fenv"
-	"github.com/spf13/viper"
+	"github.com/lbrun25/bbox"
 )
 
 func main() {
