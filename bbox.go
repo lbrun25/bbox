@@ -1,6 +1,9 @@
 package bbox
 
-import "errors"
+import (
+	"errors"
+	"math"
+)
 
 var (
 	// ErrEmptyCoordinates will throw if the coordinates are empty
@@ -102,4 +105,37 @@ func GetFromE7Coordinates(coordinates []CoordinateE7) (*BoundingBoxE7, error) {
 		Top:    maxLon,
 	}
 	return &res, nil
+}
+
+// getDistanceBBox gets the great circle distance
+// Based on http://janmatuschek.de/LatitudeLongitudeBoundingCoordinates#Distance
+func getDistanceBBox(left float64, bottom float64, right float64, top float64) float64 {
+	lat1 := left * math.Pi / 180
+	lon1 := bottom * math.Pi / 180
+	lat2 := right * math.Pi / 180
+	lon2 := top * math.Pi / 180
+
+	r := 6371 * math.Pow10(3)
+	dist := math.Acos(math.Sin(lat1) * math.Sin(lat2) + math.Cos(lat1) * math.Cos(lat2) * math.Cos(lon1 - lon2)) * r
+	return dist
+}
+
+// GetFloatBBoxDistance gets the diagonal distance of the float bounding box
+func GetFloatBBoxDistance(boundingBox BoundingBoxFloat) float64 {
+	left := boundingBox.Left
+	bottom := boundingBox.Bottom
+	right := boundingBox.Right
+	top := boundingBox.Top
+	res := getDistanceBBox(left, bottom, right, top)
+	return res
+}
+
+// GetE7BBoxDistance gets the diagonal distance of the E7 bounding box
+func GetE7BBoxDistance(boundingBox BoundingBoxE7) float64 {
+	left := float64(boundingBox.Left) * math.Pow10(-7)
+	bottom := float64(boundingBox.Bottom) * math.Pow10(-7)
+	right := float64(boundingBox.Right) * math.Pow10(-7)
+	top := float64(boundingBox.Top) * math.Pow10(-7)
+	res := getDistanceBBox(left, bottom, right, top)
+	return res
 }

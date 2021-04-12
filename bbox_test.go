@@ -108,3 +108,29 @@ func TestGetFromE7Coordinates(t *testing.T) {
 		assert.Nil(t, actualBbox)
 	})
 }
+
+func TestGetE7BBoxDistance(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		bBox := bbox.BoundingBoxE7{
+			Left:   int32(48.578911 * math.Pow10(7)),
+			Bottom: int32(7.744521 * math.Pow10(7)),
+			Right:  int32(48.58488 * math.Pow10(7)),
+			Top:    int32(7.764263 * math.Pow10(7)),
+		}
+		distance := bbox.GetE7BBoxDistance(bBox)
+		assert.Equal(t, 1596.72, math.Round(distance*100)/100)
+	})
+}
+
+func TestGetFloatBBoxDistance(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		bBox := bbox.BoundingBoxFloat{
+			Left:   48.578911,
+			Bottom: 7.744521,
+			Right:  48.58488,
+			Top:    7.764263,
+		}
+		distance := bbox.GetFloatBBoxDistance(bBox)
+		assert.Equal(t, 1596.72, math.Round(distance*100)/100)
+	})
+}
